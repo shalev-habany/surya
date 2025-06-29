@@ -18,8 +18,9 @@ def recognize_text(preprocessed_images: list[Image.Image], threshold: float = 0.
     detection_predictor = DetectionPredictor()
     recognition_predictor = RecognitionPredictor()
     recognized_texts = recognition_predictor(
-        preprocessed_images, det_predictor=detection_predictor)
-    recognized_texts = threshold_text(recognized_texts, threshold)
+        preprocessed_images, det_predictor=detection_predictor, math_mode=False)
+    recognized_texts = threshold_text(
+        recognized_texts, threshold)
     return recognized_texts
 
 

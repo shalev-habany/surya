@@ -23,10 +23,12 @@ def create_pdf(pdf_path: str, ocr_results: List[OCRResult], tables: List[List[Ta
 def draw_words_recognition_on_image(pdf: fitz.Page, lines: OCRResult) -> None:
     bboxes = [line.bbox for line in lines.text_lines]
     words = [line.text for line in lines.text_lines]
+    buffer = 2
     for word, bbox in zip(words, bboxes):
         x, y, w, h = bbox[0], bbox[1], bbox[2] - bbox[0], bbox[3] - bbox[1]
         font_size = max(8, min(int(0.6 * h), 50))
-        rect = fitz.Rect(x, y, x + w, y + h)
+        rect = fitz.Rect(x - buffer, y - buffer, x + w + buffer, y + h + buffer)
+        # pdf.draw_rect(rect, width=1, color=fitz.utils.getColor("red"))
         pdf.insert_textbox(
             rect, get_display(strip_html_tags(word), base_dir='R'),
             fontname="figo",

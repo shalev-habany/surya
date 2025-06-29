@@ -17,14 +17,14 @@ def crop_images(images: List[Image.Image], limits=DEFAULT_PAGE_LIMITS) -> List[I
 def preprocess_for_table_rec(cropped_images: List[Image.Image], transform_images: Callable[[List[np.ndarray]], List[np.ndarray]]) -> List[Image.Image]:
     np_cropped_images = [np.array(image) for image in cropped_images]
     preprocessed_images = transform_images(np_cropped_images)
-    return preprocessed_images
+    return [Image.fromarray(img) for img in preprocessed_images]
 
 
 def preprocess_for_ocr(cropped_images: List[Image.Image], transform_images: Callable[[List[np.ndarray]], List[np.ndarray]]) -> List[Image.Image]:
     np_cropped_images = [cv2.cvtColor(
         np.array(image), cv2.COLOR_BGR2GRAY) for image in cropped_images]
     preprocessed_images = transform_images(np_cropped_images)
-    return preprocessed_images
+    return [Image.fromarray(img) for img in preprocessed_images]
 
 def run_preprocess(images: List[Image.Image], transforms_for_ocr: Callable[[List[np.ndarray]], List[np.ndarray]], transforms_for_table_rec: Callable[[List[np.ndarray]], List[np.ndarray]]) -> Tuple[List[Image.Image], List[Image.Image], List[LayoutResult]]:
     """

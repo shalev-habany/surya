@@ -7,3 +7,6 @@ def binerize_images(images: List[np.ndarray]) -> List[np.ndarray]:
 
 def canny_images(images: List[np.ndarray]) -> List[np.ndarray]:
     return [cv2.Canny(img, 100, 200) for img in images]
+
+# def align_images(images: List[np.ndarray]) -> List[np.ndarray]:
+    
